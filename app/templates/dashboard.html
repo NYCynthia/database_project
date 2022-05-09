@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %} 
+	<h1> dashboard </h1>
+
+	<h2> Your clubs </h2>
+	<ul>
+	{% for club in clubs %}
+		<li><a href="{{ url_for('view_club', club_id=club[0]) }}">{{club[1]}}</a></li>
+	{% endfor %}
+	</ul>
+	<a href="{{ url_for('create_club') }}">create a new club</a>
+	
+	<form>
+	<p>
+	search for a club:
+	<input type="text" name="q">
+	<button>search</button>
+	</p>
+	</form>
+	{% if results %}
+		<ul>
+		{% for result in results %}
+			<li><a href="{{ url_for('view_club', club_id=result[0]) }}">{{result[1]}}</a></li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}
+

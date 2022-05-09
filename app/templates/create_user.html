@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}test title{% endblock %}
+
+{% block content %}
+	<h1>Create User</h1>
+	{% for field, errors in form.errors.items() %}
+		<p>*** {{", ".join(errors)}}</p>
+	{% endfor %}
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		<p>
+		{{ form.username.label }}
+		{{ form.username(size=32) }}
+		</p>
+		<p>
+		{{ form.password.label }}
+		{{ form.password(size=32) }}
+		</p>
+		<p>
+		{{ form.confirm_pw.label }}
+		{{ form.confirm_pw(size=32) }}
+		</p>
+		<p>
+		{{ form.first_name.label }}
+		{{ form.first_name(size=32) }}
+		</p>
+		<p>
+		{{ form.last_name.label }}
+		{{ form.last_name(size=32) }}
+		</p>
+		<p>
+		{{ form.email.label }}
+		{{ form.email(size=32) }}
+		</p>
+		<p>
+		{{ form.phone.label }}
+		{{ form.phone(size=32) }}
+		</p>
+		<p>
+		{{ form.is_private.label }} {{ form.is_private() }}
+		</p>
+		<p>
+		{{ form.submit() }}
+		</p>
+	</form>
+{% endblock %}
+

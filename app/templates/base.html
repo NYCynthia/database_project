@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+	</head>
+	<body>
+		<span style="font-weight:bold; font-size:large; margin-right:100px;">MeetApp</span><a href="{{ url_for('dashboard') }}">dashboard</a>
+		<a href="{{ url_for('logout') }}">logout</a>
+		<hr>
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		<ul>
+			{% for message in messages %}
+			<li>{{message}}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% endwith %}
+		{% block content %}
+		{% endblock %}
+	</body>
+</html>
+

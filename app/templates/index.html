@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %} 
+	<h1> meetapp </h1>
+	<h2>signin</h2>
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		<p>
+		{{ form.username.label }}
+		{{ form.username(size=32) }}
+		</p>
+		<p>
+		{{ form.password.label }}
+		{{ form.password(size=32) }}
+		</p>
+		<p>
+		{{ form.remember_me() }} {{ form.remember_me.label }}
+		</p>
+		<p>
+		{{ form.submit() }}
+		</p>
+	</form>
+	<p>
+	not a member yet? <a href="{{ url_for('create_user') }}">create user</a>
+	</p>
+{% endblock %}

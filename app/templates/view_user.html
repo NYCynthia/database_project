@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>View user:</h1>
+
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>First name:</strong> {{ user.first_name }}</p>
+<p><strong>Last name:</strong> {{ user.last_name }}</p>
+
+{% if user.id != other_user.id %}
+	<h2>Messages between you {{ user.username }}</h2>
+	{% if messages %}
+	<ul>
+		{% for message in messages %}
+			<li><strong>{{message[0]}}:</strong> {{ message[1]}}</li>
+		{% endfor %}
+	</ul>
+	{% else %}
+	<p>There are no messages yet</p>
+	{% endif %}
+
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		<div style="width:350px">
+		{{ form.msg.label }}
+		{{ form.msg(cols=50, rows=3) }}
+		<div style="float:right">{{ form.submit() }}</div>
+		</div>
+	</form>
+{% endif %}
+{% endblock %}

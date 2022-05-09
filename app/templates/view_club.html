@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %} 
+	<h1> Club details for {{club[1]}} </h1>
+
+	<h2> Location </h2>
+	<p>
+	{{club[2]}}
+	</p>
+	<h2>Description</h2>
+	<p>
+	{{club[3]}}
+	</p>
+	<h2>Members</h2>
+	<ul>
+	{% for member in members %}
+		{% if not member[4] %}
+		<li>{% if member[6] %} admin: {% endif %} <a href="{{ url_for("view_user", other_user_id=member[0])}}">{{member[2]}} {{member[3]}} ({{member[1]}})</a></li>
+		{% endif %}
+	{% endfor %}
+	</ul>
+	<form>
+	{% if is_member %}
+		<button name="action" value="leave">Leave Club</button>
+	{% elif joinable %}
+		<button name="action" value="join">Join</button>
+	{% elif not joinable %}
+		<p>Sorry, but the club is currently at its max capacity, please try to join later!</p>
+	{% endif %}
+	</form>
+	{% if is_member %}
+		<h2>Events</h2>
+		{% if events %}
+			<ul>
+			{% for event in events %}
+				<li><a href="{{ url_for('view_event', event_id=event[2]) }}">{{ event[3] }}</a></li>
+			{% endfor %}
+			</ul>
+		{% else %}
+			<p>There are no events yet</p>
+		{% endif %}
+		{% if is_admin %}
+			<a href="{{ url_for('create_event', club_id=club[0]) }}">Create Event</a>
+		{% endif %}
+
+		<h2>Messages</h2>
+		{% if messages %}
+		<ul>
+			{% for message in messages %}
+				<li><strong>{{message[0]}}:</strong> {{ message[1]}}</li>
+			{% endfor %}
+		</ul>
+		{% else %}
+		<p>There are no messages yet</p>
+		{% endif %}
+
+		<form method="POST">
+			{{ form.hidden_tag() }}
+			<div style="width:350px">
+			{{ form.msg.label }}
+			{{ form.msg(cols=50, rows=3) }}
+			<div style="float:right">{{ form.submit() }}</div>
+			</div>
+		</form>
+	{% endif %}
+
+{% endblock %}

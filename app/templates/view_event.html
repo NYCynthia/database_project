@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %} 
+	<h1> Event details for {{event[1]}} </h1>
+
+	<h2> Location </h2>
+	<p>
+	{{event[2]}}
+	</p>
+	<h2>Description</h2>
+	<p>
+	{{event[3]}}
+	</p>
+	{% if is_admin %}
+		<h2>Attendees</h2>
+		{% if attendees %}
+		<ul>
+		{% for attendee in attendees %}
+			<li><a href="{{ url_for('view_user', other_user_id=attendee[0]) }}">{{attendee[2]}} {{attendee[3]}}</a> ({{attendee[1]}} - {% if attendee[5] == 2 %}Going{% elif attendee[5] == 1 %}Maybe{% else %}Not going{% endif %})</li>
+		{% endfor %}
+		{% else %}
+		<p>No one is going yet! You should be the first!</p>
+		{% endif %}
+		</ul>
+	{% endif %}
+	{% if is_invited %}
+		<form>
+		<p> Current status: 
+		{% if attendance == None %}
+			<strong>No reply yet</strong>
+		{% elif attendance == 0 %}
+			<strong>Not going</strong>
+		{% elif attendance == 1 %}
+			<strong>Maybe</strong>
+		{% elif attendance == 2 %}
+			<strong>Going</strong>
+		{% endif %}
+		</p>
+		<p>Change status</p>
+		<button name="attendance" value="0">Not going</button>
+		<button name="attendance" value="1">Maybe</button>
+		<button name="attendance" value="2">Going</button>
+		</form>
+
+		<h2>Messages</h2>
+		{% if messages %}
+		<ul>
+			{% for message in messages %}
+				<li><strong>{{message[0]}}:</strong> {{ message[1]}}</li>
+			{% endfor %}
+		</ul>
+		{% else %}
+		<p>There are no messages yet</p>
+		{% endif %}
+
+		<form method="POST">
+			{{ form.hidden_tag() }}
+			<div style="width:350px">
+			{{ form.msg.label }}
+			{{ form.msg(cols=50, rows=3) }}
+			<div style="float:right">{{ form.submit() }}</div>
+			</div>
+		</form>
+	{% endif %}
+{% endblock %}

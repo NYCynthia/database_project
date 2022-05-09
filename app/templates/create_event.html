@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}test title{% endblock %}
+
+{% block content %}
+	<h1>Create Event for Club: {{ club_name }}</h1>
+	{% for field, errors in form.errors.items() %}
+		<p>*** {{field}} {{", ".join(errors)}}</p>
+	{% endfor %}
+	<form method="POST">
+		{{ form.hidden_tag() }}
+		<p>
+		{{ form.name.label }}
+		{{ form.name(size=32) }}
+		</p>
+		<p>
+		{{ form.location.label }}
+		{{ form.location(size=32) }}
+		</p>
+		<p>
+		{{ form.description.label }}
+		{{ form.description(cols=50, rows=10) }}
+		</p>
+		<p>
+		{{ form.start_datetime.label }}
+		{{ form.start_datetime(type="datetime-local") }}
+		</p>
+		<p>
+		{{ form.end_datetime.label }}
+		{{ form.end_datetime(type="datetime-local") }}
+		</p>
+		<p>
+		{{ form.submit() }}
+		</p>
+	</form>
+{% endblock %}
+
